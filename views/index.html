@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antrian</title>
+
+  <style>
+    .antrian {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .text-antrian {
+      font-size: 70px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="antrian">
+    <span id="txt-antrian" class="txt-antrian">
+      {{ .antrian }}
+    </span>
+  </div>
+
+  
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyCWn5Ay-zTvtFPmve7cGS3iFoXY3WeNkIM",
+    authDomain: "dts-be-23-3b784.firebaseapp.com",
+    databaseURL: "https://dts-be-23-3b784.firebaseio.com",
+    projectId: "dts-be-23-3b784",
+    storageBucket: "dts-be-23-3b784.appspot.com",
+    messagingSenderId: "335146828459",
+    appId: "1:335146828459:web:908a5115a789aa24636dee",
+    measurementId: "G-7274DE51G5"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  const antrianRef = firebase.database().ref('antrian');
+  let currentAntrian;
+  antrianRef.on('value', snapshot => {
+    const antrian = snapshot.val();
+    currentAntrian = antrian.find(item => item != null && item.status === false)
+    document.getElementById('txt-antrian').innerText = currentAntrian.id
+  });
+</script>
+</body>
+</html>
